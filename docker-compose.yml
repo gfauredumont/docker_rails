@@ -20,7 +20,7 @@ web:
     - '.env.web'
   command: bash -c "rm -rf tmp/* && foreman start"
 
-mailcatcher:
-  image: schickling/mailcatcher
-  ports:
-    - "1080:1080"
+# mailcatcher:
+#   image: schickling/mailcatcher
+#   ports:
+#     - "1080:1080"
