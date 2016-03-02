@@ -1,0 +1,26 @@
+db:
+  image: postgres:9.4.4
+  ports:
+    - "5432"
+  env_file:
+    - '.env.db'
+  volumes:
+    - ./docker/volumes/postgres:/var/lib/postgresql/data
+
+web:
+  build: .
+  volumes:
+    - .:/project_name
+  ports:
+    - "3002:3000"
+  links:
+    - db
+    # - mailcatcher
+  env_file:
+    - '.env.web'
+  command: bash -c "rm -rf tmp/* && foreman start"
+
+mailcatcher:
+  image: schickling/mailcatcher
+  ports:
+    - "1080:1080"
