@@ -34,6 +34,12 @@ You can then create a Rails project as you whish:
     rails new .
 ```
 
+Create a `Procfile` in your project directory for foreman commands:
+
+```sh
+    echo "web: bundle exec rails server -p \$PORT -b 0.0.0.0" > Procfile
+```
+
 When project is created, replace 'project_name' with real one in Dockerfile and docker-compose.yml
 Uncomment the 4 project bundling lines in Dockerfile:
 
@@ -43,3 +49,4 @@ Uncomment the 4 project bundling lines in Dockerfile:
     COPY Gemfile.lock Gemfile.lock
     RUN bundle install
 ```
+
