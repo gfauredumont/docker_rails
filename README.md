@@ -14,7 +14,7 @@ Foreman
 Bower (for front end dependencies)
 
 
-# REMEMBER TO add the .env.* files to your .gitignore file !!
+## REMEMBER TO add the .env.* files to your .gitignore file !!
 
 The Postrgres volume is used to allow saving DB data even when containers are stopped
 
