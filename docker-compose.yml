@@ -1,5 +1,5 @@
 db:
-  image: postgres:9.4.4
+  image: postgres:9.5
   ports:
     - "5432"
   env_file:
@@ -12,7 +12,7 @@ web:
   volumes:
     - .:/project_name
   ports:
-    - "3002:3000"
+    - "3000:3000"
   links:
     - db
     # - mailcatcher
