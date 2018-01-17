@@ -17,7 +17,13 @@ Environment based on:
 The Postrgres volume is used to allow saving DB data even when containers are stopped
 
 
-First step is to build the environment and run it with bash to install rails (or anything else...)
+The Dockerfile is a genric one, please change the name of the project before starting the container:
+
+=> Replace `project_name` with your actual project name in `Dockerfile`
+=> Do the same in `docker-compose.yml`
+
+First step is to build the environment and install rails (or anything else...)
+before rebuilding the complete environment:
 
 ```sh
     # Build the image with just the smallest Ruby image and postgres
@@ -32,6 +38,9 @@ First step is to build the environment and run it with bash to install rails (or
 ```
 
 _Project is not already created so you can benefit from later Rails improvements_
+
+
+### Linux specific:
 
 From host, to 'get ownership back' for the generated files (with a `rails generate` for instance), this command finds all files owned by root in the current directory and chown them back to `given_user`:
 (Postgres directory will stay own by root, this is normal !)
