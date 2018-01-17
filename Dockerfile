@@ -1,17 +1,15 @@
-FROM ruby:2.3.0
-MAINTAINER Guillaume FAURE-DUMONT
-RUN apt-get update -qq && apt-get install -y build-essential postgresql-contrib nodejs npm nodejs-legacy
-RUN gem install foreman
-RUN npm install -g bower
-RUN echo '{ "allow_root": true }' > /root/.bowerrc
+# Use this file with Docker
+# https://docs.docker.com/engine/installation/
+FROM ruby:2.5.0
+RUN apt-get update -qq && apt-get install -y build-essential libpq-dev nodejs
+
+# Force Bundler to work in parallel
+RUN bundle config --global jobs 4
 RUN echo 'gem: --no-document' > /root/.gemrc
 
 RUN mkdir /project_name
-
-# WORKDIR /tmp
-# COPY Gemfile Gemfile
-# COPY Gemfile.lock Gemfile.lock
-# RUN bundle install
-
-ADD . /project_name
 WORKDIR /project_name
+COPY Gemfile /project_name/Gemfile
+COPY Gemfile.lock /project_name/Gemfile.lock
+RUN bundle install
+COPY . /project_name

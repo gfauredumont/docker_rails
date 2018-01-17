@@ -1,20 +1,19 @@
 # docker_rails
 
-This Docker/compose set allows a easy creation of a __Ruby on Rails environment__ (latest Rails + Postgres 9.5)
+This Docker/compose set allows a easy creation of a __Ruby on Rails environment__ (latest Rails + Postgres 9.6.6)
 
 
-=> If you need a __mail catcher__, just uncomment the corresponding lines in the compose file
+=> If you need a __mail catcher__, just uncomment the corresponding lines in the compose file (and modify the rails configuration accordingly)
+
 
 Environment based on:
 
-- Ruby 2.3.1
+- Ruby 2.5
 - Rails (latest if not specified)
-- PostgreSQL 9.5
-- Foreman
-- Bower (for front end dependencies)
+- PostgreSQL 9.6.6
 
 
-#### REMEMBER to add the .env.* files to your .gitignore file !!
+#### REMEMBER to add the __.env.web__ files to your .gitignore file !!
 
 The Postrgres volume is used to allow saving DB data even when containers are stopped
 
@@ -26,33 +25,7 @@ First step is to build the environment and run it with bash to install rails (or
     docker-compose run web bash
 ```
 
-_Project is not already created so you can choose your options (and benefit from later Rails improvements)_
-
-
-=> You can then create a Rails project as you wish:
-
-```sh
-    gem install rails
-    rails new .
-```
-
-Create a `Procfile` in your project directory for foreman commands:
-
-```sh
-    echo "web: bundle exec rails server -p \$PORT -b 0.0.0.0" > Procfile
-```
-
-- When project is created, replace 'project_name' with real one in `Dockerfile`and `docker-compose.yml`
-- Uncomment the 4 project bundling lines in Dockerfile:
-
-```ruby
-    WORKDIR /tmp
-    COPY Gemfile Gemfile
-    COPY Gemfile.lock Gemfile.lock
-    RUN bundle install
-```
-
-
+_Project is not already created so you can benefit from later Rails improvements_
 
 From host, to 'get ownership back' for the generated files (with a `rails generate` for instance), this command finds all files owned by root in the current directory and chown them back to `given_user`:
 (Postgres directory will stay own by root, this is normal !)

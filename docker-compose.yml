@@ -1,26 +1,24 @@
-db:
-  image: postgres:9.5
-  ports:
-    - "5432"
-  env_file:
-    - '.env.db'
-  volumes:
+# Use this file with docker-compose
+# https://docs.docker.com/compose/install/
+version: '3'
+services:
+  db:
+    image: postgres:9.6.6
+    volumes:
     - ./docker/volumes/postgres:/var/lib/postgresql/data
+  web:
+    build: .
+    command: bundle exec rails s -p 3000 -b '0.0.0.0'
+    volumes:
+      - .:/project_name
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    env_file:
+      - '.env.web'
 
-web:
-  build: .
-  volumes:
-    - .:/project_name
-  ports:
-    - "3000:3000"
-  links:
-    - db
-    # - mailcatcher
-  env_file:
-    - '.env.web'
-  command: bash -c "rm -rf tmp/* && foreman start"
-
-# mailcatcher:
-#   image: schickling/mailcatcher
-#   ports:
-#     - "1080:1080"
+#  mailcatcher:
+#    image: schickling/mailcatcher
+#    ports:
+#      - "1080:1080"
