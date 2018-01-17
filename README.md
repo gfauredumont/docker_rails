@@ -5,7 +5,6 @@ This Docker/compose set allows a easy creation of a __Ruby on Rails environment_
 
 => If you need a __mail catcher__, just uncomment the corresponding lines in the compose file (and modify the rails configuration accordingly)
 
-
 Environment based on:
 
 - Ruby 2.5
@@ -21,8 +20,15 @@ The Postrgres volume is used to allow saving DB data even when containers are st
 First step is to build the environment and run it with bash to install rails (or anything else...)
 
 ```sh
+    # Build the image with just the smallest Ruby image and postgres
     docker-compose build
-    docker-compose run web bash
+    # Now create the Rails project with desired options
+    docker-compose run web rails new . --force --database=postgresql
+    # Now that the Gemfile has been populated, we can build the final image (bundling is done in the Docker image building)
+    docker-compose build
+    # From now on, building it is only needed when the Gemfile changes
+    # Start the container like this
+    docker-compose up
 ```
 
 _Project is not already created so you can benefit from later Rails improvements_
